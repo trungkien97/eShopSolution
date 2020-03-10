@@ -1,4 +1,5 @@
-﻿using eShopSolution.Data.Enities;
+﻿using eShopSolution.Data.Configurations;
+using eShopSolution.Data.Enities;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,6 +12,12 @@ namespace eShopSolution.Data.EF
     {
         public EShopDbContext(DbContextOptions options) : base(options)
         {
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
